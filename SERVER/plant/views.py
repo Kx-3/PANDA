@@ -11,10 +11,10 @@ from rest_framework.response import Response
 def login_user(request):
     username = request.data.get('username')
     password = request.data.get('password')
-    user = authenticate(request, username, password)
+    user = authenticate(request, username=username, password=password)
     
     if user is not None:
-        token = Token.objects.get_or_create(user)
+        token, created = Token.objects.get_or_create(user=user)
         return Response({
             "message":"User logged in successfully.",
             "session":token.key
