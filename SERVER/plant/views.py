@@ -1,10 +1,15 @@
 from django.shortcuts import render
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from rest_framework.permissions import  IsAuthenticated
 from rest_framework import status
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework.response import Response
+from django.contrib.auth import logout
+from .models import Tree, Site
+from .serializer import TreeSerializer, SiteSerializer
 
 # Create your views here.
 @api_view(["POST"])
@@ -49,3 +54,30 @@ def register_user(request):
         "message":"User created sucessfully.",
         "session":token.key
     })
+    
+@api_view(["POST"])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def logout_user(request):
+    try:
+        # Delete the user's token to logout
+        request.user.auth_token.delete()
+        return Response({'message': 'Successfully logged out.'}, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+@api_view(["GET"])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def show_trees(request):
+    trees = Tree.objects.all()
+    serializer = TreeSerializer(trees, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(["GET"])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def show_sites(request):
+    sites = Site.objects.all()
+    serializer = SiteSerializer(sites, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
