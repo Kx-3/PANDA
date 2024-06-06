@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate
 from rest_framework.response import Response
 from django.contrib.auth import logout
 from .models import Tree, Site
-from .serializer import TreeSerializer, SiteSerializer
+from .serializer import TreeSerializer, SiteSerializer, OrderSerializer
 
 # Create your views here.
 @api_view(["POST"])
@@ -77,3 +77,17 @@ def show_sites(request):
     sites = Site.objects.all()
     serializer = SiteSerializer(sites, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(["POST"])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def send_order(request):
+    try:
+        serializer = OrderSerializer(data=request.data, context={'request':request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message" : "Plant order successfully sent."})
+        else:
+            return Response({"message":"Bad request"}, status=status.HTTP_400_BAD_REQUEST)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

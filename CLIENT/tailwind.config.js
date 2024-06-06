@@ -9,7 +9,8 @@ export default {
       colors: {
         "background":"#F8F6E3",
         "dark-teal":"#006769",
-        "light-teal":"#40A578"
+        "light-teal":"#40A578",
+        "footer":"#212529"
       },
       fontFamily: {
         "poppins": "Poppins, sans-serif",
