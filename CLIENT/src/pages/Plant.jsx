@@ -1,4 +1,5 @@
 import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/authContext";
 import { Link } from "react-router-dom";
@@ -7,6 +8,27 @@ const Plant = () => {
   const session = useContext(AuthContext);
   const [trees, setTrees] = useState([]);
   const [sites, setSites] = useState([]);
+
+  const [site, setSite] = useState("")
+  const [tree, setTree] = useState("")
+
+  const sendOrder = async () => {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Token" + " " + session.session,
+      },
+      body: JSON.stringify({
+        tree_species: tree,
+        site_name: site,
+      }),
+    };
+    const response = await fetch("http://127.0.0.1:8000/api/plant/", options);
+    const data = await response.json();
+    console.log(data);
+    console.log(session.session);
+  };
 
   const fetchTrees = async () => {
     const options = {
@@ -48,6 +70,7 @@ const Plant = () => {
                 return (
                   <button
                     key={tree.id}
+                    onClick={() => setTree(tree.name)}
                     className="w-[300px] h-[350px] flex flex-col bg-white font-raleway rounded-xl text-dark-teal border border-dark-teal m-4 hover:text-light-teal hover:border-light-teal focus:border-2 focus:border-light-teal focus:text-light-teal"
                   >
                     <div className="w-full">
@@ -82,6 +105,7 @@ const Plant = () => {
                 return (
                   <button
                     key={site.id}
+                    onClick={() => setSite(site.name)}
                     className="w-[90vw] h-[60vh] lg:h-[350px] flex bg-white font-raleway rounded-xl text-dark-teal border border-dark-teal m-4 hover:text-light-teal hover:border-light-teal focus:border-2 focus:border-light-teal focus:text-light-teal"
                   >
                     <div className="w-[40vw] h-full">
@@ -102,6 +126,7 @@ const Plant = () => {
                   </button>
                 );
               })}
+              <button onClick={sendOrder} className="bg-dark-teal text-2xl text-white rounded px-5 py-3 font-poppins my-5">Plant</button>
             </div>
           </section>
         </>
@@ -113,9 +138,15 @@ const Plant = () => {
               Log In
             </button>
           </Link>
-          <p className="text-gray-500 my-8">Don't have an account?<Link className="mx-3 underline" to="/register">Register</Link></p>
+          <p className="text-gray-500 my-8">
+            Don't have an account?
+            <Link className="mx-3 underline" to="/register">
+              Register
+            </Link>
+          </p>
         </section>
       )}
+      <Footer/>
     </>
   );
 };

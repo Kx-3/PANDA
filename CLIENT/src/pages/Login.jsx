@@ -1,4 +1,5 @@
 import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 import Hands from "../assets/hands-login.jpg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -89,6 +90,7 @@ const Login = () => {
           </div>
         </div>
       </section>
+      <Footer/>
     </>
   );
 };

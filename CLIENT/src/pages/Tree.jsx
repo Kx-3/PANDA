@@ -1,4 +1,5 @@
 import { useLocation } from "react-router-dom";
+import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 
 const Tree = () => {
@@ -21,6 +22,7 @@ const Tree = () => {
             <h1><strong>Description:</strong> {tree.description}</h1>
         </div>
       </section>
+      <Footer/>
     </>
   );
 };

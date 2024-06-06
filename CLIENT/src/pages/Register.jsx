@@ -1,4 +1,5 @@
 import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 import Hands from "../assets/hands-register.jpg";
 import { useState } from "react";
 
@@ -113,6 +114,7 @@ const Register = () => {
             </div>
           </div>
         </div>
+        <Footer/>
       </section>
     </>
   );

@@ -1,4 +1,5 @@
 import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/authContext";
 import { Link } from "react-router-dom";
@@ -51,6 +52,7 @@ const Sites = () => {
             );
           })}
         </div>
+        <Footer/>
       </section>
     </>
   );
