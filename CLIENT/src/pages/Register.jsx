@@ -24,8 +24,17 @@ const Register = () => {
         password: password,
       }),
     };
-    const response = await fetch("http://127.0.0.1:8000/api/register/", options);
+    const response = await fetch(
+      "http://127.0.0.1:8000/api/register/",
+      options
+    );
     const data = await response.json();
+    if (data.message) {
+      toast.success(data.message);
+    } else if (data.error) {
+      toast.error(data.error);
+    }
+    console.log(data);
     console.log(data);
     localStorage.setItem("session", data.session);
   };
@@ -46,7 +55,10 @@ const Register = () => {
             </h1>
           </div>
           <div className="flex">
-            <form onSubmit={handleSubmit} className="lg:w-1/2 md:w-2/3 mx-auto flex flex-col items-center gap-10">
+            <form
+              onSubmit={handleSubmit}
+              className="lg:w-1/2 md:w-2/3 mx-auto flex flex-col items-center gap-10"
+            >
               <div className="flex flex-wrap w-full">
                 <div className="p-2 w-full">
                   <div className="relative flex flex-col">
@@ -112,9 +124,15 @@ const Register = () => {
                 alt=""
               />
             </div>
+            <ToastContainer
+              toastClassName={"font-poppins"}
+              hideProgressBar={true}
+              position="top-right"
+              autoClose={5000}
+            />
           </div>
         </div>
-        <Footer/>
+        <Footer />
       </section>
     </>
   );

@@ -2,6 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/pandalogo.png";
 import { useContext } from "react";
 import { AuthContext } from "../context/authContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const NavBar = () => {
   const session = useContext(AuthContext);
@@ -16,6 +18,11 @@ const NavBar = () => {
     };
     const response = await fetch("http://127.0.0.1:8000/api/logout/", options);
     const data = await response.json();
+    if (data.message) {
+      toast.success(data.message);
+    } else if (data.error) {
+      toast.error(data.error);
+    }
     console.log(data);
     console.log(session.session);
     localStorage.clear();
@@ -67,6 +74,12 @@ const NavBar = () => {
           )}
         </nav>
       </div>
+      <ToastContainer
+        toastClassName={"font-poppins"}
+        hideProgressBar={true}
+        position="top-right"
+        autoClose={5000}
+      />
     </header>
   );
 };

@@ -88,6 +88,6 @@ def send_order(request):
             serializer.save()
             return Response({"message" : "Plant order successfully sent."})
         else:
-            return Response({"message":"Bad request"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error":"Bad request"}, status=status.HTTP_400_BAD_REQUEST)
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

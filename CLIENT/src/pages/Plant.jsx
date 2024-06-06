@@ -3,14 +3,16 @@ import Footer from "../components/Footer";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/authContext";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Plant = () => {
   const session = useContext(AuthContext);
   const [trees, setTrees] = useState([]);
   const [sites, setSites] = useState([]);
 
-  const [site, setSite] = useState("")
-  const [tree, setTree] = useState("")
+  const [site, setSite] = useState("");
+  const [tree, setTree] = useState("");
 
   const sendOrder = async () => {
     const options = {
@@ -26,13 +28,18 @@ const Plant = () => {
     };
     const response = await fetch("http://127.0.0.1:8000/api/plant/", options);
     const data = await response.json();
+    if (data.message) {
+      toast.success(data.message);
+    } else if (data.error) {
+      toast.error(data.error);
+    }
     console.log(data);
     console.log(session.session);
   };
 
   const fetchTrees = async () => {
     const options = {
-      method: "GET"
+      method: "GET",
     };
     const response = await fetch("http://127.0.0.1:8000/api/trees/", options);
     const data = await response.json();
@@ -126,7 +133,18 @@ const Plant = () => {
                   </button>
                 );
               })}
-              <button onClick={sendOrder} className="bg-dark-teal text-2xl text-white rounded px-5 py-3 font-poppins my-5">Plant</button>
+              <button
+                onClick={sendOrder}
+                className="bg-dark-teal text-2xl text-white rounded px-5 py-3 font-poppins my-5"
+              >
+                Plant
+              </button>
+              <ToastContainer
+                toastClassName={"font-poppins"}
+                hideProgressBar={true}
+                position="top-right"
+                autoClose={5000}
+              />
             </div>
           </section>
         </>
@@ -146,7 +164,7 @@ const Plant = () => {
           </p>
         </section>
       )}
-      <Footer/>
+      <Footer />
     </>
   );
 };
