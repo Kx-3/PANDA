@@ -15,6 +15,7 @@ class Tree(models.Model):
 class Site(models.Model):
     name = models.CharField(max_length=200, unique=True)
     about = models.CharField(max_length=900)
+    img_url = models.CharField(max_length=999, default="image")
     
     def __str__(self):
         return self.name

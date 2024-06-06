@@ -1,10 +1,12 @@
 import NavBar from "../components/NavBar";
 import Hands from "../assets/hands-login.jpg";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate()
 
   const loginUser = async () => {
     const options = {
@@ -21,6 +23,10 @@ const Login = () => {
     const data = await response.json();
     console.log(data);
     localStorage.setItem("session", data.session);
+    if (data.session){
+        navigate("/")
+        navigate(0)
+    }
   };
 
   const handleSubmit = (e) => {

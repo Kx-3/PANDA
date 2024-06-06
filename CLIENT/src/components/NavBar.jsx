@@ -1,23 +1,26 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/pandalogo.png";
 import { useContext } from "react";
 import { AuthContext } from "../context/authContext";
 
 const NavBar = () => {
   const session = useContext(AuthContext);
+  const navigate = useNavigate()
 
   const logoutUser = async () => {
     const options = {
       method: "POST",
       headers: {
-        "Authorization": 'Token'+' '+session.session
+        Authorization: "Token" + " " + session.session,
       },
-    }
+    };
     const response = await fetch("http://127.0.0.1:8000/api/logout/", options);
     const data = await response.json();
     console.log(data);
-    console.log(session.session)
-  }
+    console.log(session.session);
+    localStorage.clear()
+    navigate(0)
+  };
 
   return (
     <header className="h-[15vh] text-gray-600 body-font bg-background/70 sticky top-0 w-full font-raleway shadow-lg">
@@ -32,17 +35,23 @@ const NavBar = () => {
           </Link>
         </div>
         <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center text-light-teal">
-          <a href="#Kenya" className="mr-5 hover:text-gray-900">
-            Why Kenya
-          </a>
-          <a href="#mission" className="mr-5 hover:text-gray-900">
-            Mission
-          </a>
+          <Link className="mr-5 hover:text-gray-900" to="/plant">
+            Plant
+          </Link>
+          <Link className="mr-5 hover:text-gray-900" to="/trees">
+            Trees
+          </Link>
+          <Link className="mr-5 hover:text-gray-900" to="/sites">
+            Sites
+          </Link>
         </nav>
-        {session ? (
-            <button onClick={logoutUser} className="inline-flex items-center bg-dark-teal border-0 py-1 px-3 focus:outline-none hover:bg-light-teal rounded text-white">
-              Log Out
-            </button>
+        {session.session ? (
+          <button
+            onClick={logoutUser}
+            className="inline-flex items-center bg-dark-teal border-0 py-1 px-3 focus:outline-none hover:bg-light-teal rounded text-white"
+          >
+            Log Out
+          </button>
         ) : (
           <div className="flex gap-3">
             <Link to="/login">

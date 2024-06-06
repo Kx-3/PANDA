@@ -67,16 +67,12 @@ def logout_user(request):
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
 @api_view(["GET"])
-@authentication_classes([SessionAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])
 def show_trees(request):
     trees = Tree.objects.all()
     serializer = TreeSerializer(trees, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(["GET"])
-@authentication_classes([SessionAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])
 def show_sites(request):
     sites = Site.objects.all()
     serializer = SiteSerializer(sites, many=True)
