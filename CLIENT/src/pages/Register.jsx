@@ -2,6 +2,8 @@ import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import Hands from "../assets/hands-register.jpg";
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
   const [username, setUsername] = useState("");
