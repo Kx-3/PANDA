@@ -26,7 +26,11 @@ const NavBar = () => {
     console.log(data);
     console.log(session.session);
     localStorage.clear();
-    navigate(0);
+    if (data.message) {
+      setTimeout(() => {
+        navigate(0);
+      }, 5000);
+    }
   };
 
   return (

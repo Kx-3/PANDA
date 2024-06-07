@@ -2,6 +2,7 @@ import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import Hands from "../assets/hands-register.jpg";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -11,6 +12,7 @@ const Register = () => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const registerUser = async () => {
     const options = {
@@ -37,8 +39,13 @@ const Register = () => {
       toast.error(data.error);
     }
     console.log(data);
-    console.log(data);
     localStorage.setItem("session", data.session);
+    if (data.session) {
+      setTimeout(() => {
+        navigate("/");
+        navigate(0);
+      }, 5000);
+    }
   };
 
   const handleSubmit = (e) => {

@@ -3,11 +3,13 @@ import Footer from "../components/Footer";
 import Hands from "../assets/hands-login.jpg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const loginUser = async () => {
     const options = {
@@ -22,11 +24,18 @@ const Login = () => {
     };
     const response = await fetch("http://127.0.0.1:8000/api/login/", options);
     const data = await response.json();
+    if (data.message) {
+      toast.success(data.message);
+    } else if (data.error) {
+      toast.error(data.error);
+    }
     console.log(data);
     localStorage.setItem("session", data.session);
-    if (data.session){
-        navigate("/")
-        navigate(0)
+    if (data.session) {
+      setTimeout(() => {
+        navigate("/");
+        navigate(0);
+      }, 5000);
     }
   };
 
@@ -89,8 +98,14 @@ const Login = () => {
             </form>
           </div>
         </div>
+        <ToastContainer
+          toastClassName={"font-poppins"}
+          hideProgressBar={true}
+          position="top-right"
+          autoClose={5000}
+        />
       </section>
-      <Footer/>
+      <Footer />
     </>
   );
 };
