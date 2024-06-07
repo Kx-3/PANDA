@@ -10,11 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
-from dotenv import load_dotenv
-import dj_database_url
 from pathlib import Path
-
-load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,7 +26,8 @@ SECRET_KEY = 'django-insecure-+ag_=9u(e3-86-ej1zymzqcn^m3@tlgq$vq$__+en#0c#*6kzs
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "panda-n1pc.onrender.com"
+    "panda-n1pc.onrender.com",
+    '127.0.0.1'
 ]
 
 
@@ -93,7 +90,10 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.parse(os.getenv("DATABASE_URL"))
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 
