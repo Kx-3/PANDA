@@ -22,7 +22,7 @@ const Login = () => {
         password: password,
       }),
     };
-    const response = await fetch("http://127.0.0.1:8000/api/login/", options);
+    const response = await fetch("https://panda-n1pc.onrender.com/api/login/", options);
     const data = await response.json();
     if (data.message) {
       toast.success(data.message);

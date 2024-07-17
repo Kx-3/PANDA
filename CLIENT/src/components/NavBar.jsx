@@ -16,7 +16,7 @@ const NavBar = () => {
         Authorization: "Token" + " " + session.session,
       },
     };
-    const response = await fetch("http://127.0.0.1:8000/api/logout/", options);
+    const response = await fetch("https://panda-n1pc.onrender.com/api/logout/", options);
     const data = await response.json();
     if (data.message) {
       toast.success(data.message);

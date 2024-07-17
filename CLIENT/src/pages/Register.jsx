@@ -29,7 +29,7 @@ const Register = () => {
       }),
     };
     const response = await fetch(
-      "http://127.0.0.1:8000/api/register/",
+      "https://panda-n1pc.onrender.com/api/register/",
       options
     );
     const data = await response.json();

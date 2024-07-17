@@ -11,7 +11,7 @@ const Sites = () => {
     const options = {
       method: "GET"
     };
-    const response = await fetch("http://127.0.0.1:8000/api/sites/", options);
+    const response = await fetch("https://panda-n1pc.onrender.com/api/sites/", options);
     const data = await response.json();
     console.log(data);
     console.log(session.session);

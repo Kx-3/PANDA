@@ -26,7 +26,7 @@ const Plant = () => {
         site_name: site,
       }),
     };
-    const response = await fetch("http://127.0.0.1:8000/api/plant/", options);
+    const response = await fetch("https://panda-n1pc.onrender.com/api/plant/", options);
     const data = await response.json();
     if (data.message) {
       toast.success(data.message);
@@ -41,7 +41,7 @@ const Plant = () => {
     const options = {
       method: "GET",
     };
-    const response = await fetch("http://127.0.0.1:8000/api/trees/", options);
+    const response = await fetch("https://panda-n1pc.onrender.com/api/trees/", options);
     const data = await response.json();
     console.log(data);
     console.log(session.session);
@@ -52,7 +52,7 @@ const Plant = () => {
     const options = {
       method: "GET",
     };
-    const response = await fetch("http://127.0.0.1:8000/api/sites/", options);
+    const response = await fetch("https://panda-n1pc.onrender.com/api/sites/", options);
     const data = await response.json();
     console.log(data);
     console.log(session.session);
